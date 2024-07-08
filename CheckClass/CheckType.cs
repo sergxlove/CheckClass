@@ -22,6 +22,16 @@ namespace CheckClass
             GetListEvents();
         }
 
+        public void GetInfoType(bool isViewConstructors, bool isViewProperties, bool isViewMethods, bool isViewInterfaces, bool isViewFields, bool isViewEvents)
+        {
+            GetStatsType();
+            if (isViewConstructors) GetListConstructors();
+            if (isViewProperties) GetListProperties();
+            if (isViewMethods) GetListMethods();
+            if (isViewInterfaces) GetListInterfaces();
+            if (isViewFields) GetListFields();
+            if (isViewEvents) GetListEvents();
+        }
 
         private void GetStatsType()
         {
@@ -71,11 +81,26 @@ namespace CheckClass
         {
             Console.WriteLine("List methods");
             var listMethods = _type.GetMethods();
+            string modificator = "";
             if (listMethods.Length != 0)
             {
                 foreach (var item in listMethods)
                 {
-                    Console.WriteLine(item);
+                    if (item.IsPublic)
+                        modificator = "public ";
+                    else if (item.IsPrivate)
+                        modificator = "private ";
+                    else if (item.IsAssembly)
+                        modificator = "internal ";
+                    else if (item.IsFamily)
+                        modificator = "protected ";
+                    else if (item.IsFamilyAndAssembly)
+                        modificator = "private protected ";
+                    else if (item.IsFamilyOrAssembly)
+                        modificator = "protected internal ";
+                    if (item.IsStatic)
+                        modificator = "static";
+                    Console.WriteLine($"{modificator} {item}");
                 }
             }
             else
@@ -142,3 +167,5 @@ namespace CheckClass
         private readonly Type _type;
     }
 }
+
+
