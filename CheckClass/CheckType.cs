@@ -22,6 +22,7 @@ namespace CheckClass
             GetListEvents();
         }
 
+
         private void GetStatsType()
         {
             Console.WriteLine($"Name : {_type.Name}");
