@@ -26,6 +26,7 @@ namespace CheckClass
         public string GetInfoTypeString()
         {
             StringBuilder result = new StringBuilder();
+            result.Append($"{GetStatsTypeString()} {GetListConstructorsString()} {GetListPropertiesString()} {GetListMethodsString()} {GetListInterfacesString()} {GetListFieldsString()} {GetListEventsString()}");
             return result.ToString();
         }
 
@@ -38,6 +39,19 @@ namespace CheckClass
             if (isViewInterfaces) GetListInterfaces();
             if (isViewFields) GetListFields();
             if (isViewEvents) GetListEvents();
+        }
+
+        public string GetInfoTypeString(bool isViewConstructors, bool isViewProperties, bool isViewMethods, bool isViewInterfaces, bool isViewFields, bool isViewEvents)
+        {
+            StringBuilder result = new StringBuilder();
+            result.Append(GetInfoTypeString());
+            if (isViewConstructors) result.Append(GetListConstructorsString());
+            if (isViewProperties) result.Append(GetListPropertiesString());
+            if (isViewMethods) result.Append(GetListMethodsString());
+            if (isViewInterfaces) result.Append(GetListInterfacesString());
+            if (isViewFields) result.Append(GetListFieldsString());
+            if (isViewEvents) result.Append(GetListEventsString());
+            return result.ToString();
         }
 
         private void GetStatsType()
@@ -117,7 +131,7 @@ namespace CheckClass
             StringBuilder result = new StringBuilder();
             result.Append("List properties :");
             var listPropeerties = _type.GetProperties();
-            if (listPropeerties.Length != 0) 
+            if (listPropeerties.Length != 0)
             {
                 foreach (var item in listPropeerties)
                 {
@@ -173,7 +187,7 @@ namespace CheckClass
             var listMethods = _type.GetMethods();
             if (listMethods.Length != 0)
             {
-                foreach(var item in listMethods)
+                foreach (var item in listMethods)
                 {
                     if (item.IsPublic)
                         modificator = "public ";
@@ -224,9 +238,9 @@ namespace CheckClass
             StringBuilder result = new StringBuilder();
             result.Append("List interfaces :\n");
             var listInterfaces = _type.GetInterfaces();
-            if(listInterfaces.Length != 0)
+            if (listInterfaces.Length != 0)
             {
-                foreach(var item in listInterfaces)
+                foreach (var item in listInterfaces)
                 {
                     result.Append($"{item} \n");
                 }
@@ -262,9 +276,9 @@ namespace CheckClass
             StringBuilder result = new StringBuilder();
             result.Append("List field \n");
             var listFields = _type.GetFields();
-            if(listFields.Length != 0)
+            if (listFields.Length != 0)
             {
-                foreach( var item in listFields)
+                foreach (var item in listFields)
                 {
                     result.Append($"{item} \n");
                 }
