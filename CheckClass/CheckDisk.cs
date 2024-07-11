@@ -23,5 +23,18 @@ namespace CheckClass
                 Console.WriteLine();
             }
         }
+
+        public string GetInfoDiskString()
+        {
+            StringBuilder result = new StringBuilder();
+            var drives = DriveInfo.GetDrives();
+            foreach (var item in drives)
+            {
+                result.Append($"Name : {item.Name} \nType : {item.DriveType} \nDrive Format : {item.DriveFormat}\n");
+                if (item.IsReady) result.Append($"Memory : {(item.TotalSize - item.TotalFreeSpace) / 1073741824} GB / {item.TotalFreeSpace / 1073741824} GB \n");
+            }
+            result.Append('\n');
+            return result.ToString();
+        }
     }
 }
