@@ -85,7 +85,6 @@ namespace CheckClass
             }
             return result.ToString();
         }
-
         public string Path { get; set; }
     }
 }
