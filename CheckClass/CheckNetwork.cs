@@ -30,5 +30,21 @@ namespace CheckClass
                 Console.WriteLine();
             }
         }
+        public string GetInfoNetworkingString()
+        {
+            var adapters = NetworkInterface.GetAllNetworkInterfaces();
+            StringBuilder result = new StringBuilder();
+            result.Append($"Total devices : {adapters.Length}\n");
+            foreach (var item in adapters)
+            {
+                result.Append("==========================================\n\n");
+                result.Append($"Id devices : {item.Id} \nName devices : {item.Name} \nName description : {item.Description}\n" +
+                    $"Nmae interface : {item.NetworkInterfaceType} \nPhysical address : {item.GetPhysicalAddress()}\n" +
+                    $"Status : {item.OperationalStatus} \nSpeed : {item.Speed}");
+                IPInterfaceStatistics stats = item.GetIPStatistics();
+                result.Append($"Getting : {stats.BytesReceived}\nSenting : {stats.BytesSent}");
+            }
+            return result.ToString();
+        }
     }
 }
