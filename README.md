@@ -10,9 +10,6 @@
 # About / О проекте :
 
 
-
-
-
 # Installation / Установка
 
 # System requirements / Системные требования
